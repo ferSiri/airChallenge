@@ -1,16 +1,23 @@
 import { useState } from "react";
+import { useSnackbar } from 'notistack';
 import { Autocomplete, Button, Paper, styled, TextField, Typography } from "@mui/material";
 import { getAirports } from "../services/appServices.service";
 import { calcCrow, normalizeData } from "../utils";
 import { Airport } from "../interfaces/interfaces.interface";
 import AutocompleteInput from "./Autocomplete.component";
+import Results from "./Results.component";
 
 const AirportsForm = () => {
+    const { enqueueSnackbar } = useSnackbar();
     const [firstAirportOptions, setFirstAirportOptions] = useState<any[]>([]);
     const [secondAirportOptions, setSecondAirportOptions] = useState<any[]>([]);
     const [selectedAirports, setSelectedAirports] = useState<{first: Airport | null, second: Airport | null}>({first: null, second:null});
-    const [error, setError] = useState('');
     const [airportsDistance, setAirportsDistance] = useState<number>();
+    const [showResults, setShowResults] = useState<boolean>(false);
+
+    const onSearchError = (data: any) => {
+        console.log(data);
+    }
 
     const getFirstAirportOptions = (data: any) => {
       const airports = normalizeData(data);
@@ -27,45 +34,62 @@ const AirportsForm = () => {
         if(!!selectedAirports.first && !!selectedAirports.second){
             const distance = calcCrow(selectedAirports);
             setAirportsDistance(distance);
+            setShowResults(true);
+        }else{
+            enqueueSnackbar('Both fields are required', { variant: 'error' });
         }
     };
+
+    const newSearch = () => {
+        setShowResults(false);
+        setSelectedAirports({first: null, second:null});
+    }
     
     return (
-        <FormContainer>
-            <Typography variant="h5" align="center" sx={{mb:4}}>{"Calculate the distance between two airports"}</Typography>
-            <StyledForm onSubmit={onSubmit}>
-                <AutocompleteInput
-                    inputId="first-airport"
-                    options={firstAirportOptions}
-                    compareKey='iata'
-                    label="First Airport"
-                    onInputChange={(event, value) =>getAirports(value, getFirstAirportOptions, (data)=>console.log(data))}
-                    onChange={(event, value) => setSelectedAirports({...selectedAirports, first: value})}
-                    sx={{width: '100%', mb:4}}
-                />
-                <AutocompleteInput
-                    inputId="second-airport"
-                    options={secondAirportOptions}
-                    compareKey='iata'
-                    label="Second Airport"
-                    onInputChange={(event, value) =>getAirports(value, getSecondAirportOptions, (data)=>console.log(data))}
-                    onChange={(event, value) => setSelectedAirports({...selectedAirports, second: value})}
-                    sx={{width: '100%', mb:4}}
-                />
-                <Button type="submit" variant="contained">GET DISTANCE</Button>
-                {airportsDistance && <Typography>{`The distance is ${airportsDistance} miles`}</Typography>}
-            </StyledForm>
-        </FormContainer>
+        <Container>
+            {
+                showResults ? 
+                <Results
+                    distance = {airportsDistance}
+                    airports = {selectedAirports}
+                    newSearch = {newSearch}
+                /> :
+                <>
+                    <Typography variant="h5" align="center" sx={{mb:4}}>{"Calculate the distance between two airports"}</Typography>
+                    <StyledForm onSubmit={onSubmit}>
+                        <AutocompleteInput
+                            inputId="first-airport"
+                            options={firstAirportOptions}
+                            compareKey='iata'
+                            label="First Airport"
+                            onInputChange={(event, value) =>getAirports(value, getFirstAirportOptions, onSearchError)}
+                            onChange={(event, value) => setSelectedAirports({...selectedAirports, first: value})}
+                            sx={{width: '100%', mb:4}}
+                        />
+                        <AutocompleteInput
+                            inputId="second-airport"
+                            options={secondAirportOptions}
+                            compareKey='iata'
+                            label="Second Airport"
+                            onInputChange={(event, value) =>getAirports(value, getSecondAirportOptions, onSearchError)}
+                            onChange={(event, value) => setSelectedAirports({...selectedAirports, second: value})}
+                            sx={{width: '100%', mb:4}}
+                        />
+                        <Button color='warning' type="submit" variant="contained">GET DISTANCE</Button>
+                    </StyledForm>
+                </>
+            }
+        </Container>
     );
 }
 
-const FormContainer = styled(Paper)(({ theme }) => ({
-    width:'600px',
+const Container = styled(Paper)(({ theme }) => ({
+    width:'500px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 50
+    padding: 50,
 }));
 
 const StyledForm = styled('form')(({ theme }) => ({

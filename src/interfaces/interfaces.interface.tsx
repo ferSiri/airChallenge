@@ -25,3 +25,8 @@ export interface AutocompletePropsInterface {
     onChange: (event: React.SyntheticEvent<Element, Event>, value: any) => void;
     sx?: SxProps;
 }
+export interface ResultsPropsInterface {
+    distance?: number;
+    airports: {first: Airport | null, second: Airport | null};
+    newSearch: ()=>void;
+}
