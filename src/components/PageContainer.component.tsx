@@ -1,12 +1,21 @@
-import { Container } from "@mui/material";
+import { Container, styled } from "@mui/material";
 import { PageContainerProps } from "../interfaces/interfaces.interface";
 
     const PageContainer = ({children}: PageContainerProps) => {
         return (
-            <Container>
+            <StyledContainer disableGutters={true}>
                 {children}
-            </Container>
+            </StyledContainer>
         );
     }
+
+    const StyledContainer = styled(Container)(({ theme }) => ({
+        height: '100vh',
+        width: '100 vw',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundImage: `url(/images/takingOff.jpeg)`
+    }));
 
  export default PageContainer;

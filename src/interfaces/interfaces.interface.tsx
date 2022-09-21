@@ -1,3 +1,5 @@
+import { SxProps } from "@mui/material";
+
 export interface PageContainerProps {
     children: React.ReactNode;
 }
@@ -13,4 +15,13 @@ export interface Airport {
     latitude: string;
     longitude: string;
     name:string;
+}
+export interface AutocompletePropsInterface {
+    inputId: string;
+    options: any[];
+    compareKey: string;
+    label: string;
+    onInputChange: (event: React.SyntheticEvent<Element, Event>, value: string) => void;
+    onChange: (event: React.SyntheticEvent<Element, Event>, value: any) => void;
+    sx?: SxProps;
 }
