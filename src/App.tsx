@@ -1,11 +1,13 @@
-import React from 'react';
+import AirportsForm from './components/AirportsForm.component';
+import PageContainer from './components/PageContainer.component';
 
 function App() {
   return (
-    <div className="App">
-      prueba
-    </div>
+    <PageContainer>
+      <AirportsForm/>
+    </PageContainer>
   );
 }
 
 export default App;
+
