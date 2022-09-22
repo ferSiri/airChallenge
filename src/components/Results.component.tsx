@@ -8,7 +8,7 @@ const Results = ({distance, airports, newSearch}: ResultsPropsInterface) => {
     const formattedDistance = distance && !isNaN(distance) ? distance.toFixed(2) : '0';
     return (
         <Container>
-            <ResultsText variant="h6">{`The distance is ${formattedDistance} miles`}</ResultsText>
+            <ResultsText variant="h6">{`The distance is ${formattedDistance} nmi`}</ResultsText>
             <Map distance={distance} airports={airports}/>
             <Button color='primary' sx={{display: 'flex', marginTop: '20px'}} onClick={newSearch}>
                 <ChevronLeftIcon/>
