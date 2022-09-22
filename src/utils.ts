@@ -67,17 +67,29 @@ export const calcCrow = (airports: {first:any, second:any}) => {
     return { origin, destination };
   }
 
-  export const getMapZoom = (distance: number | undefined): number => {
+  export const getMapZoom = (distance: number | undefined, width: number): number => {
+    
     if (distance) {
-      switch (true) {
-        case distance>1300:
-          return 3;
-        case distance>800:
-          return 4;
-        case distance>100:
-          return 6;
-        default:
-          return 7;
+      if(width>800){
+        switch (true) {
+          case distance>1300:
+            return 3;
+          case distance>800:
+            return 4;
+          case distance>100:
+            return 6;
+          default:
+            return 7;
+        }
+      }else{
+        switch (true) {
+          case distance>800:
+            return 2.3;
+          case distance>100:
+            return 3;
+          default:
+            return 5;
+        }
       }
     }
     return 7;

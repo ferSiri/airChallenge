@@ -7,7 +7,6 @@ const apcm = multi({key : apiKey, secret:apiSecret, limit: 7, countries: 'US', t
 export const getAirports = async (searchParams: string, successAction: (data:any)=>void, errorAction: (data:any)=>void) => {
     apcm.onSuccess = successAction;
     apcm.onError = errorAction;
-    //THIS CONDITION AVOIDS UNNECESARY REQUESTS SINCE THE API WILL SEND AN ERROR WITH LESS THAN 3 CHARACTERS
     if(searchParams.length > 2){
         await apcm.request(searchParams);
     }

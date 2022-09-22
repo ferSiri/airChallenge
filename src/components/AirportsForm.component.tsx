@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useSnackbar } from 'notistack';
 import { Autocomplete, Button, Paper, styled, TextField, Typography } from "@mui/material";
-import { getAirports } from "../services/appServices.service";
-import { calcCrow, normalizeData } from "../utils";
+import { useSnackbar } from 'notistack';
 import { Airport } from "../interfaces/interfaces.interface";
 import AutocompleteInput from "./Autocomplete.component";
 import Results from "./Results.component";
+import { getAirports } from "../services/appServices.service";
+import { calcCrow, normalizeData } from "../utils";
 
 const AirportsForm = () => {
     const { enqueueSnackbar } = useSnackbar();
@@ -75,7 +75,7 @@ const AirportsForm = () => {
                             onChange={(event, value) => setSelectedAirports({...selectedAirports, second: value})}
                             sx={{width: '100%', mb:4}}
                         />
-                        <Button color='warning' type="submit" variant="contained">GET DISTANCE</Button>
+                        <Button color='primary' type="submit" variant="contained">GET DISTANCE</Button>
                     </StyledForm>
                 </>
             }
@@ -90,6 +90,14 @@ const Container = styled(Paper)(({ theme }) => ({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 50,
+    [theme.breakpoints.down('md')]: {
+        width: '300px',
+        padding: '5px 50px'
+    },
+    [theme.breakpoints.down('sm')]: {
+        width: '100%',
+        padding: '50px 10px'
+    },
 }));
 
 const StyledForm = styled('form')(({ theme }) => ({
