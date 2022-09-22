@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Autocomplete, Button, Paper, styled, TextField, Typography } from "@mui/material";
+import { Button, Paper, styled, Typography } from "@mui/material";
 import { useSnackbar } from 'notistack';
 import { Airport } from "../interfaces/interfaces.interface";
 import AutocompleteInput from "./Autocomplete.component";
