@@ -2,7 +2,7 @@ import { Airport, DirectionsData } from "./interfaces/interfaces.interface";
 
 export const normalizeData = (data: {airports:Airport[]}) : Airport[] => {
     const {airports} = data;
-    return airports.map(airport=>({...airport, label: airport.name}));
+    return airports.map(airport=>({...airport, label: `${airport.name} - ${airport.iata}`}));
 }
 
 const toRad = (value: number) => {
