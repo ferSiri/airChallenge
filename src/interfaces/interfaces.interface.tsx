@@ -30,3 +30,18 @@ export interface ResultsPropsInterface {
     airports: {first: Airport | null, second: Airport | null};
     newSearch: ()=>void;
 }
+export interface MapPropsInterface {
+    airports: {first: Airport | null, second: Airport | null};
+    distance?: number;
+}
+
+export interface DirectionsData{
+    origin:{
+        lat: number;
+        lng: number;
+    },
+    destination:{
+        lat: number;
+        lng: number;
+    },
+}
